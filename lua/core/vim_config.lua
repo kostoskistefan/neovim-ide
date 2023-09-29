@@ -1,10 +1,3 @@
--- Disable Neovim's built-in file explorer
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- Hide vim command line when it's not used
-vim.opt.cmdheight = 0
-
 -- Enable 256 colors
 vim.opt.termguicolors = true
 
@@ -17,7 +10,7 @@ vim.opt.number = true
 -- Set hybrid line numbers
 vim.o.relativenumber = true
 
--- Use UTF-8 encoding (for vim devicons)
+-- Use UTF-8 encoding (useful for vim devicons)
 vim.opt.encoding = 'UTF-8'
 
 -- Set tab to 4 spaces
@@ -35,9 +28,6 @@ vim.opt.autochdir = true
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand('~/.config/nvim/.undo-dir')
 
--- Hide Vim modes, since we are using lightline
-vim.opt.showmode = false 
-
 -- Use system clipboard
 vim.opt.clipboard = 'unnamedplus'
 
@@ -51,7 +41,3 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
         vim.wo.fillchars='eob: '
     end
 })
-
--- Set Vim colorscheme
-require('ayu')
-vim.cmd('colorscheme ayu-dark')
