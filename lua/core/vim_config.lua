@@ -18,7 +18,7 @@ vim.opt.tabstop     = 4
 vim.opt.shiftwidth  = 4
 vim.opt.softtabstop = 4
 
--- Convert tabs to spaces
+-- Use spaces instead of tabs
 vim.opt.expandtab = true
 
 -- Set working directory to the current file
@@ -30,10 +30,6 @@ vim.opt.undodir = vim.fn.expand('~/.config/nvim/.undo-dir')
 
 -- Use system clipboard
 vim.opt.clipboard = 'unnamedplus'
-
--- Set folding by syntax
-vim.opt.foldmethod = 'syntax'
-vim.opt.foldlevelstart = 99
 
 -- Hide tilde character on blank lines
 vim.api.nvim_create_autocmd('BufWinEnter', {

@@ -1,6 +1,5 @@
 return {
-    'echasnovski/mini.comment',
-    version = '*',
+    'numToStr/Comment.nvim',
     keys = {
         {
             '<C-_>',
@@ -16,6 +15,7 @@ return {
         },
     },
     config = function()
-        require('mini.comment').setup()
+        require('Comment').setup({ options = { ignore = '^$' } })
+        require('Comment.ft').set('vala', '// %s')
     end
 }

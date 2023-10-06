@@ -27,5 +27,10 @@ return {
                 enable = true
             },
         })
+
+        vim.opt.foldmethod = 'expr'
+        vim.opt.foldenable = false
+        vim.opt.foldlevelstart = 99
+        vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
     end
 }
