@@ -14,8 +14,9 @@ return {
             remap = true
         },
     },
+
     config = function()
-        require('Comment').setup({ options = { ignore = '^$' } })
+        require('Comment').setup({ ignore = '^$' })
         require('Comment.ft').set('vala', '// %s')
     end
 }

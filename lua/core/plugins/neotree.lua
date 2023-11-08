@@ -10,7 +10,12 @@ return {
         {
             '<leader>e',
             '<cmd>Neotree toggle<cr>'
-        }
+        },
+        {
+            '<F2>',
+            'r',
+            remap = true
+        },
     },
     deactivate = function()
         vim.cmd([[Neotree close]])
