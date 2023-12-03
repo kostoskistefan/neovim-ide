@@ -4,7 +4,29 @@
 		"body": [
 			"#ifndef ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H",
 			"#define ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H",
-			"\n\n\n#endif // ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H"
+			"\n",
+            "\n",
+            "\n",
+            "#endif // ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}_H"
 		]
-	}
+	},
+    "gpl_header_template": {
+        "prefix": "gpl_header_template",
+        "body": [
+            "/**",
+            " * @file:      ${TM_FILENAME/(.*)/${1:/downcase}/}",
+            " *",
+            " * @date:      ${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}",
+            " *",
+            " * @author:    Kostoski Stefan",
+            " *",
+            " * @copyright: Copyright (c) ${CURRENT_YEAR} Kostoski Stefan.",
+            " *             This program is free software; you can redistribute it and/or",
+            " *             modify it under the terms of the GNU General Public License",
+            " *             version 3 as published by the Free Software Foundation.",
+            " *",
+            " * SPDX-License-Identifier: GPL-3.0-or-later",
+            " */"
+        ]
+    }
 }
