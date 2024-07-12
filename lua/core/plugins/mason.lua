@@ -11,13 +11,11 @@ return {
         require('mason-lspconfig').setup({
             automatic_installation = {
                 exclude = {
-                    'cmake',
                     'clangd',
                     'lua_ls',
                 }
             },
             ensure_installed = {
-                'cmake',
                 'clangd',
                 'lua_ls',
             }
