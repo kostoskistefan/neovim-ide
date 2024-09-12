@@ -1,0 +1,33 @@
+snippet header_guard
+	#ifndef `toupper(vim_snippets#Filename('$1_H', 'UNTITLED_H'))`
+	#define `toupper(vim_snippets#Filename('$1_H', 'UNTITLED_H'))`
+
+	${0}
+
+	#endif /* `toupper(vim_snippets#Filename('$1_H', 'UNTITLED_H'))` */
+
+snippet gpl_header_template
+	/**
+	 * @file:      `expand('%:t')`
+	 *
+	 * @date:      ${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}
+	 *
+	 * @author:    Kostoski Stefan
+	 *
+	 * @copyright: Copyright (c) ${CURRENT_YEAR} Kostoski Stefan.
+	 *             This work is licensed under the terms of the GNU General Public License version 3.
+	 *             For a copy, see <https://opensource.org/license/gpl-3-0/>.
+	 */
+
+snippet mit_header_template
+	/**
+	 * @file:      `expand('%:t')`
+	 *
+	 * @date:      ${CURRENT_DATE} ${CURRENT_MONTH_NAME} ${CURRENT_YEAR}
+	 *
+	 * @author:    Kostoski Stefan
+	 *
+	 * @copyright: Copyright (c) ${CURRENT_YEAR} Kostoski Stefan.
+	 *             This work is licensed under the terms of the MIT license.
+	 *             For a copy, see <https://opensource.org/license/MIT>.
+	 */
