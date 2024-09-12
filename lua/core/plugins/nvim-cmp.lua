@@ -1,13 +1,13 @@
 return {
     'hrsh7th/nvim-cmp',
     dependencies = {
+        'dcampos/cmp-snippy',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp',
         'lukas-reineke/cmp-rg',
         'neovim/nvim-lspconfig',
         'andersevenrud/cmp-tmux',
-        'saadparwaiz1/cmp_luasnip',
         'FelipeLema/cmp-async-path',
     },
     config = function()
@@ -18,12 +18,11 @@ return {
         end
 
         local cmp = require('cmp')
-        local luasnip = require('luasnip')
 
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    luasnip.lsp_expand(args.body)
+                    require('snippy').expand_snippet(args.body)
                 end,
             },
             window = {
@@ -39,8 +38,6 @@ return {
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
-                    elseif luasnip.expand_or_locally_jumpable() then
-                        luasnip.expand_or_locally_jumpable()
                     elseif has_words_before() then
                         cmp.complete()
                     else
@@ -50,8 +47,6 @@ return {
                 ['<S-Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                        luasnip.jump(-1)
                     else
                         fallback()
                     end
@@ -59,7 +54,7 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'luasnip' },
+                { name = 'snippy' },
                 { name = 'tmux' },
                 { name = 'rg' },
                 { name = 'buffer' },

@@ -31,6 +31,9 @@ vim.opt.undodir = vim.fn.expand('~/.config/nvim/.undo-dir')
 -- Use system clipboard
 vim.opt.clipboard = 'unnamedplus'
 
+-- Add a color column on line 120
+vim.opt.colorcolumn = '120'
+
 -- Hide tilde character on blank lines
 vim.api.nvim_create_autocmd('BufWinEnter', {
     callback = function()
