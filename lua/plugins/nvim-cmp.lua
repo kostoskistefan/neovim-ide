@@ -1,15 +1,22 @@
 return {
     'hrsh7th/nvim-cmp',
+
     dependencies = {
-        'dcampos/cmp-snippy',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lsp',
-        'lukas-reineke/cmp-rg',
         'neovim/nvim-lspconfig',
-        'andersevenrud/cmp-tmux',
+
+        -- Completion sources
+        'hrsh7th/cmp-buffer',
+        'dcampos/cmp-snippy',
+        'hrsh7th/cmp-cmdline',
+        'ray-x/cmp-treesitter',
+        'hrsh7th/cmp-nvim-lsp',
         'FelipeLema/cmp-async-path',
+        'hrsh7th/cmp-nvim-lsp-signature-help',
+
+        -- Snippets
+        'dcampos/nvim-snippy',
     },
+
     config = function()
         local has_words_before = function()
             unpack = unpack or table.unpack
@@ -20,15 +27,22 @@ return {
         local cmp = require('cmp')
 
         cmp.setup({
-            snippet = {
-                expand = function(args)
-                    require('snippy').expand_snippet(args.body)
-                end,
-            },
             window = {
                 completion = cmp.config.window.bordered(),
                 documentation = cmp.config.window.bordered(),
             },
+
+            snippet = { expand = function(args) require('snippy').expand_snippet(args.body) end },
+
+            sources = cmp.config.sources({
+                { name = 'nvim_lsp' },
+                { name = 'snippy' },
+                { name = 'buffer' },
+                { name = 'treesitter' },
+                { name = 'async_path' },
+                { name = 'nvim_lsp_signature_help' },
+            }),
+
             mapping = cmp.mapping.preset.insert({
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -52,59 +66,49 @@ return {
                     end
                 end, { 'i', 's' }),
             }),
-            sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'snippy' },
-                { name = 'tmux' },
-                { name = 'rg' },
-                { name = 'buffer' },
-            }),
+
             formatting = {
-                --fields = { 'kind', 'abbr', 'menu' },
+                fields = { 'kind', 'abbr', 'menu' },
+
                 format = function(entry, vim_item)
-                    if vim.tbl_contains({ 'path' }, entry.source.name) then
-                        local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-                        if icon then
-                            vim_item.kind = icon
-                            vim_item.kind_hl_group = hl_group
-                            return vim_item
-                        end
+                    local kind = require('lspkind').cmp_format({ mode = 'symbol' })(entry, vim.deepcopy(vim_item))
+
+                    local highlights_info = require('colorful-menu').cmp_highlights(entry)
+
+                    if highlights_info ~= nil then
+                        vim_item.abbr_hl_group = highlights_info.highlights
+                        vim_item.abbr = highlights_info.text
                     end
 
-                    return require('lspkind').cmp_format({ with_text = true })(entry, vim_item)
-                end
-            },
-        })
+                    local strings = vim.split(kind.kind, '%s', { trimempty = true })
 
-        cmp.setup.filetype('gitcommit', {
-            sources = cmp.config.sources({
-                { name = 'cmp_git' },
-            }, {
-                { name = 'buffer' },
-            })
+                    vim_item.kind = ' ' .. (strings[1] or '') .. ' '
+                    vim_item.menu = ''
+
+                    return vim_item
+                end,
+            },
         })
 
         cmp.setup.cmdline({ '/', '?' }, {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = {
-                { name = 'buffer' }
-            }
+            sources = { { name = 'buffer' } }
         })
 
         cmp.setup.cmdline(':', {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = cmp.config.sources({
-                { name = 'path' }
-            }, {
-                { name = 'cmdline' }
-            })
+            sources = cmp.config.sources({ { name = 'path' }, { name = 'cmdline' } }),
+            matching = { disallow_symbol_nonprefix_matching = false }
         })
 
+        local lspconfig = require('lspconfig')
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        capabilities.offsetEncoding = { 'utf-16' }
 
-        require('lspconfig').clangd.setup {
+        lspconfig['clangd'].setup({ capabilities = capabilities })
+
+        lspconfig['lua_ls'].setup({
             capabilities = capabilities,
-        }
+            settings = { Lua = { diagnostics = { globals = { 'vim' } } } },
+        })
     end
 }

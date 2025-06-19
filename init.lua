@@ -1,1 +1,5 @@
-require('core')
+vim.loader.enable()
+require("core.leader")
+require("core.lazy")
+require("core.vim")
+require("core.keymap")
