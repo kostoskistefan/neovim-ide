@@ -7,6 +7,6 @@ return {
     },
 
     opts = {
-        ensure_installed = { 'lua_ls', 'clangd' },
+        ensure_installed = { 'lua-language-server', 'clangd' },
     },
 }

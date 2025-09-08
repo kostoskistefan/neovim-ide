@@ -26,7 +26,7 @@ vim.opt.autochdir = true
 
 -- Use an undo file to preserve history between sessions
 vim.opt.undofile = true
--- vim.opt.undodir = vim.fn.expand('~/.config/nvim/.undo-dir')
+vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
 
 -- Use system clipboard
 vim.opt.clipboard = 'unnamedplus'
@@ -40,7 +40,3 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
         vim.wo.fillchars='eob: '
     end
 })
-
--- Disable netrw because the NvimTree plugin is present
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
